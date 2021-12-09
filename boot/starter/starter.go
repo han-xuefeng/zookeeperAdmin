@@ -1,4 +1,4 @@
-package boot
+package starter
 
 type StarterContext map[string]interface{}
 
@@ -17,11 +17,11 @@ type Starter interface {
 
 // 基础启动器实现基础的方法  后续的启动器不需要每个方法都实现一遍
 
-func (s *BaseStarter) Init(ctx StarterContext)      {}
-func (s *BaseStarter) Setup(ctx StarterContext)     {}
-func (s *BaseStarter) Start(ctx StarterContext)     {}
-func (s *BaseStarter) Stop(ctx StarterContext)      {}
-func (s *BaseStarter) StartBlocking() bool          { return false }
+func (s *BaseStarter) Init(ctx StarterContext)  {}
+func (s *BaseStarter) Setup(ctx StarterContext) {}
+func (s *BaseStarter) Start(ctx StarterContext) {}
+func (s *BaseStarter) Stop(ctx StarterContext)  {}
+func (s *BaseStarter) StartBlocking() bool      { return false }
 
 // StarterManage 启动器管理器 管理所有的启动器
 type StarterManage struct {

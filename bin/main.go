@@ -1,9 +1,8 @@
 package main
 
+import "han-xuefeng/zookeeperAdmin/boot"
+
 func main(){
-	// 入口文件
-	/**
-	1. 加载配置文件
-	2. 启动管理器
-	 */
+	app := boot.NewApplication()
+	app.Start()
 }
