@@ -1,9 +1,11 @@
 package dao
 
-import "gorm.io/gorm"
-
 type User struct {
-	gorm.Model
-	Id int
+	Id int `gorm:"primaryKey"`
 	Name string
+}
+
+// TableName 会将 User 的表名重写为 `profiles`
+func (User) TableName() string {
+	return "user"
 }
