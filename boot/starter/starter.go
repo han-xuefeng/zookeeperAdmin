@@ -2,7 +2,8 @@ package starter
 
 type StarterContext map[string]interface{}
 
-// BaseStarter 基础启动器
+var _ Starter = new(BaseStarter)
+// BaseStarter 基础启动器 空启动器 为了方便资源启动器代码实现
 type BaseStarter struct {
 }
 

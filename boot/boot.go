@@ -18,6 +18,8 @@ func NewApplication() *Application {
 // 注册默认的starter 系统自己需要用的 后续需要的 可以使用Register
 func (app *Application) registerBaseStarter(){
 	// todo:
+	// 注册gorm
+	app.Register(&starter.GormStarter{})
 	// 注册gin
 	app.Register(&starter.GinStarter{})
 }

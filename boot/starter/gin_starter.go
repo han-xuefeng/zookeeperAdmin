@@ -3,6 +3,7 @@ package starter
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"han-xuefeng/zookeeperAdmin/app/dao"
 )
 
 var ginEngine *gin.Engine
@@ -23,7 +24,10 @@ func (ginStart *GinStarter)Setup(ctx StarterContext){
 	// 加载路由
 	fmt.Println("注册路由")
 	ginEngine.GET("/", func(context *gin.Context) {
-		context.String(0, "nihao")
+		db := NewDbGorm()
+		user := &dao.User{}
+		db.First(user)
+		fmt.Println(user)
 	})
 }
 
