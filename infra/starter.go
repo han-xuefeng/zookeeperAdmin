@@ -50,4 +50,3 @@ var StarterRegister *starterRegister = new(starterRegister)
 func Register(s Starter) {
 	StarterRegister.Register(s)
 }
-}
