@@ -15,14 +15,12 @@ type GinServerStarter struct {
 }
 
 func Gin() *gin.Engine {
-	if ginApplication == nil {
-		ginApplication = initGin()
-	}
+	Check(ginApplication)
 	return ginApplication
 }
 
 func (g *GinServerStarter) Init(cxt infra.StarterContext) {
-	ginApplication = Gin()
+	ginApplication = initGin()
 }
 
 func (g *GinServerStarter) Setup(cxt infra.StarterContext) {
