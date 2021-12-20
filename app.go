@@ -9,5 +9,6 @@ import (
 func init() {
 	infra.Register(&base.PropsStarter{})
 	infra.Register(&base.GinServerStarter{})
+	infra.Register(&base.DbxGorm{})
 	infra.Register(&infra.WebApiStarter{})
 }
