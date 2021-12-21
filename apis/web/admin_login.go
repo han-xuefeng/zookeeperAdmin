@@ -60,5 +60,8 @@ func (a *AdminLoginApi) AdminLogin(ctx *gin.Context) {
 }
 
 func (a *AdminLoginApi) AdminLoginOut(ctx *gin.Context) {
-	ctx.String(0,"**********")
+	sess := sessions.Default(ctx)
+	sess.Delete(lib.AdminSessionInfoKey)
+	sess.Save()
+	middleware.ResponseSuccess(ctx, "")
 }

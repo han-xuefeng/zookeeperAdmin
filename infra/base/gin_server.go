@@ -26,16 +26,12 @@ func (g *GinServerStarter) Init(cxt infra.StarterContext) {
 
 func (g *GinServerStarter) Setup(cxt infra.StarterContext) {
 	// 安装session
-	//store, err := sessions.NewRedisStore(10, "tcp", "192.168.56.101:6379", "", []byte("secret"))
+	//store, err := sessions.NewRedisStore(10, "tcp", "127.0.0.1:6379", "", []byte("secret"))
 	//if err != nil {
 	//	log.Fatalf("sessions.NewRedisStore err:%v", err)
 	//}
-
-	store := sessions.NewCookieStore([]byte("secret"))
-	fmt.Println("注册全局中间")
-	sessionMid := sessions.Sessions("mysession", store)
-	Gin().Use(sessionMid)
-
+	//
+	//Gin().Use(sessions.Sessions("mysession", store))
 }
 
 func (g *GinServerStarter) Start(ctx infra.StarterContext) {
@@ -57,5 +53,11 @@ func initGin() *gin.Engine {
 	}
 	app.Use(gin.LoggerWithWriter(logfile))
 	app.Use(gin.Recovery()) // Recovery 中间件会 recover 任何 panic。如果有 panic 的话，会写入 500
+	store,err := sessions.NewRedisStore(10, "tcp", "127.0.0.1:6379", "", []byte("secret"))
+	if err != nil {
+		panic("session Redis Store error")
+	}
+	fmt.Println("注册全局中间")
+	app.Use(sessions.Sessions("mysession", store))
 	return app
 }
