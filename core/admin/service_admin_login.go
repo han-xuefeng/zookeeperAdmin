@@ -38,3 +38,4 @@ func (a *AdminLoginService)Login(input *dto.AdminLoginInput) (*Admin, error) {
 	}
 	return admin,nil
 }
+
