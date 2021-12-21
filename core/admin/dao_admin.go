@@ -8,11 +8,6 @@ type AdminDao struct {
 	runner *gorm.DB
 }
 
-func (dao *AdminDao)getOneById(id int) (*Admin, error){
-	admin := &Admin{Id: id}
-	err := dao.runner.First(admin).Error
-	if err != nil {
-		return nil,err
-	}
-	return admin,nil
+func (a *AdminDao)FindOne(admin *Admin, conds ...interface{}) error{
+	return a.runner.First(admin, "user_name", conds).Error
 }

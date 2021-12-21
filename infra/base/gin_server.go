@@ -2,6 +2,7 @@ package base
 
 import (
 	"fmt"
+	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"han-xuefeng/zookeeperAdmin/infra"
 	"os"
@@ -24,13 +25,17 @@ func (g *GinServerStarter) Init(cxt infra.StarterContext) {
 }
 
 func (g *GinServerStarter) Setup(cxt infra.StarterContext) {
-	ginApplication.GET("/", func(context *gin.Context) {
-		context.JSON(
-			200,
-			gin.H{
-				"message": "pong",
-			})
-	})
+	// 安装session
+	//store, err := sessions.NewRedisStore(10, "tcp", "192.168.56.101:6379", "", []byte("secret"))
+	//if err != nil {
+	//	log.Fatalf("sessions.NewRedisStore err:%v", err)
+	//}
+
+	store := sessions.NewCookieStore([]byte("secret"))
+	fmt.Println("注册全局中间")
+	sessionMid := sessions.Sessions("mysession", store)
+	Gin().Use(sessionMid)
+
 }
 
 func (g *GinServerStarter) Start(ctx infra.StarterContext) {

@@ -1,6 +1,7 @@
 package base
 
 import (
+	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"han-xuefeng/zookeeperAdmin/infra"
@@ -18,7 +19,7 @@ type DbxGorm struct {
 	infra.BaseStarter
 }
 
-func (db *DbxGorm)init(ctx infra.StarterContext)  {
+func (db *DbxGorm)Init(ctx infra.StarterContext)  {
 
 	user,_ := ctx.Props().Get("mysql.user")
 	password,_ := ctx.Props().Get("mysql.password")
@@ -26,6 +27,7 @@ func (db *DbxGorm)init(ctx infra.StarterContext)  {
 	dataName,_ := ctx.Props().Get("mysql.database")
 	dsn :=  user + ":" + password + "@tcp(" + host + ")/" + dataName + "?charset=utf8mb4&parseTime=True&loc=Local"
 	dbGorm, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	fmt.Println(dbGorm)
 	if err != nil {
 		panic("数据库连接失败")
 	}

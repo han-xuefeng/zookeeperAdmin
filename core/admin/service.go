@@ -2,33 +2,32 @@ package admin
 
 import (
 	"github.com/pkg/errors"
+	"gorm.io/gorm"
 	"han-xuefeng/zookeeperAdmin/dto"
 	"han-xuefeng/zookeeperAdmin/infra/base"
 	"han-xuefeng/zookeeperAdmin/lib"
-	"han-xuefeng/zookeeperAdmin/service"
-	"sync"
 )
 
-type adminLoginService struct {
+//AdminLoginService
+type AdminLoginService struct {
 
 }
-var once sync.Once
 
-func init() {
-	once.Do(func() {
-		service.IAdminLoginService = new(adminLoginService)
-	})
+func GetAdminLoginService() *AdminLoginService {
+	return new(AdminLoginService)
 }
 
-func (a *adminLoginService)Login(input *dto.AdminLoginInput) (*Admin, error) {
+func (a *AdminLoginService)Login(input *dto.AdminLoginInput) (*Admin, error) {
 
-	admin := &Admin{
-		UserName: input.Username,
-	}
+
 	adminDao := &AdminDao{
 		runner: base.DbxDatabase(),
 	}
-	err := adminDao.runner.Find(admin).Error
+	admin := &Admin{}
+	err := adminDao.FindOne(admin, "user_name", input.Username)
+	if err == gorm.ErrRecordNotFound {
+		return nil, errors.New("用户名密码错误")
+	}
 	if err != nil {
 		return nil, err
 	}

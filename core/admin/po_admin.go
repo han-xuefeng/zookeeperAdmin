@@ -11,3 +11,7 @@ type Admin struct {
 	CreatedAt time.Time `json:"create_at" gorm:"column:create_at" description:"创建时间"`
 	IsDelete  int       `json:"is_delete" gorm:"column:is_delete" description:"是否删除"`
 }
+
+func(a *Admin) TableName() string{
+	return "admin"
+}
